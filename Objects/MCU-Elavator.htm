@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\MCU-Elavator.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\MCU-Elavator.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060422: Last Updated: Thu Nov 24 15:36:27 2016
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060422: Last Updated: Thu Nov 24 16:01:43 2016
 <BR><P>
 <H3>Maximum Stack Usage =         80 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1235,8 +1235,8 @@ Global Symbols
 <P><STRONG><a name="[6f]"></a>svcMessageGet</STRONG> (Thumb, 58 bytes, Stack size 24 bytes, rt_cmsis.o(i.svcMessageGet))
 <BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = svcMessageGet &rArr; rt_mbx_wait &rArr; rt_dispatch &rArr; rt_put_prio
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_ms2tick
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_mbx_wait
+<BR>[Calls]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_mbx_wait
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_ms2tick
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> rt_cmsis.o(i.osMessageGet)
 </UL>
@@ -1262,9 +1262,9 @@ Global Symbols
 <P><STRONG><a name="[72]"></a>svcThreadTerminate</STRONG> (Thumb, 50 bytes, Stack size 8 bytes, rt_cmsis.o(i.svcThreadTerminate))
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = svcThreadTerminate &rArr; rt_tsk_delete &rArr; rt_dispatch &rArr; rt_put_prio
 </UL>
-<BR>[Calls]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_tid2ptcb
-<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_tsk_delete
+<BR>[Calls]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_tsk_delete
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_free_mem
+<LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_tid2ptcb
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> rt_cmsis.o(i.osThreadExit)
 </UL>
@@ -1279,8 +1279,8 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = sysTimerTick &rArr; isrMessagePut &rArr; isr_mbx_send &rArr; rt_psq_enq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;os_error
-<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_timer_insert
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isrMessagePut
+<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_timer_insert
 </UL>
 <BR>[Called By]<UL><LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_systick
 </UL>
