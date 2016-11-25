@@ -7,6 +7,7 @@ static bool open_door(void);
 static bool close_door(void);
 static bool move_up(void);
 static bool move_down(void);
+static bool move_stop(void);
 
 char loc_cur = 0;
 bool loc_floor_1;
