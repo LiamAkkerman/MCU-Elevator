@@ -6,13 +6,14 @@ static bool init(void);
 static bool update_inputs(void);
 static bool activate_uart(void);
 static bool usart_message(char* str);
+bool bcd_display(void);
+
 
 static bool open_door(void); 
 static bool close_door(void);
 static bool move_up(void);
 static bool move_down(void);
 static bool move_stop(void);
-
 
 
 

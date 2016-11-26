@@ -116,6 +116,7 @@ int main(void) {
 bool init(void) { 																																								//itianize all the pins and whatever else
 	SystemInit();
 	
+	//TODO change to the actual pins
 	TM_GPIO_Init(GPIOD, GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10 | GPIO_Pin_11 , TM_GPIO_Mode_IN, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
 	TM_GPIO_Init(GPIOC, GPIO_Pin_8 | GPIO_Pin_9 , TM_GPIO_Mode_IN, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
 	TM_GPIO_Init(GPIOD, GPIO_Pin_2 | GPIO_Pin_4, TM_GPIO_Mode_OUT, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
@@ -128,14 +129,17 @@ bool update_inputs(void) {																																				//poll all the pin
 	if(loc_floor_1 != TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_5)) {																//trigger switch checking for state changes of the location switches
 		loc_floor_1 = ~loc_floor_1;																																		//toggle the variable
 		loc_cur = 1;																																									//they also set the current floor, or once it leaves it'll be the latest floor
+		bcd_display();
 	}
 	if(loc_floor_2 != TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_6)) {
 		loc_floor_2 = ~loc_floor_2;
 		loc_cur = 2;
+		bcd_display();
 	}
 	if(loc_floor_3 != TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_7)) {
 		loc_floor_3 = ~loc_floor_3;
 		loc_cur = 3;
+		bcd_display();
 	}
 	
 	
@@ -206,3 +210,24 @@ bool usart_message(char* str) {
 	return 0;
 }
 
+bool bcd_display(void){
+	switch(loc_cur) {
+		case 1 : {
+			TM_GPIO_SetPinLow(GPIOC, GPIO_Pin_12);
+			TM_GPIO_SetPinHigh(GPIOC, GPIO_Pin_10);
+			break;
+		}
+		case 2 : {
+			TM_GPIO_SetPinHigh(GPIOC, GPIO_Pin_12);
+			TM_GPIO_SetPinLow(GPIOC, GPIO_Pin_10);	
+			break;	
+		}	
+		case 3 : {
+			TM_GPIO_SetPinHigh(GPIOC, GPIO_Pin_12);
+			TM_GPIO_SetPinHigh(GPIOC, GPIO_Pin_10);
+			break;
+		}		
+	}
+	
+	return 0;
+}
