@@ -6,7 +6,7 @@ static bool init(void);
 static bool update_inputs(void);
 static bool activate_uart(void);
 static bool usart_message(char* str);
-bool bcd_display(void);
+static bool bcd_display(void);
 
 
 static bool open_door(void); 

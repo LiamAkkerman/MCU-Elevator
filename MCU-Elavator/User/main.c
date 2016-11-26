@@ -231,3 +231,75 @@ bool bcd_display(void){
 	
 	return 0;
 }
+
+bool door_open(void){
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_12);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_11);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_10);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_9);
+	for( int i = 0; i<15000000 ; i++){
+		update_inputs();
+	}
+		
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_12);
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_11);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_10);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_9);
+	for( int i = 0; i<15000000 ; i++){
+		update_inputs();
+	}
+		
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_12);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_11);
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_10);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_9);
+	for( int i = 0; i<15000000 ; i++){
+		update_inputs();
+	}	
+		
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_12);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_11);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_10);
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_9);
+	for( int i = 0; i<15000000 ; i++){
+		update_inputs();
+	}	
+
+	return 0;
+}
+
+bool door_close(void){
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_12);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_11);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_10);
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_9);
+	for( int i = 0; i<15000000 ; i++){
+		update_inputs();
+	}
+		
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_12);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_11);
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_10);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_9);
+	for( int i = 0; i<15000000 ; i++){
+		update_inputs();
+	}
+		
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_12);
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_11);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_10);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_9);
+	for( int i = 0; i<15000000 ; i++){
+		update_inputs();
+	}	
+		
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_12);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_11);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_10);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_9);
+	for( int i = 0; i<15000000 ; i++){
+		update_inputs();
+	}	
+	
+	return 0;
+}
