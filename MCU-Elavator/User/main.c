@@ -18,22 +18,31 @@ int main(void) {
 		
 		if(butt_f1_up||butt_f2_down||butt_f2_up||butt_f3_down||butt_car_f1||butt_car_f2||butt_car_f3||butt_car_stop) {
 			if(butt_car_stop) {
-						if(moving) {
-							butt_car_stop = 0;
-							move_stop();							
-						}
-					}
+				butt_car_stop = 0;
+				if(usart_on) {
+					usart_message("EMERGENCY STOP ACTIVATED!");
+				}
+				if(moving) {						
+					move_stop();							
+				}
+			}
 			else switch(loc_cur) {
 				case 1 : {
 					if((butt_f1_up||butt_car_f1)&&loc_floor_1) {
-							if(moving_up||moving_down) {
-								move_stop();
-							}														
-							butt_f1_up = 0;
-							butt_car_f1 = 0;
-							open_door();
+						if(moving_up||moving_down) {
+							move_stop();
+						}														
+						butt_f1_up = 0;
+						butt_car_f1 = 0;
+						if(usart_on) {
+							usart_message("F1, arrived");
+						}
+						open_door();
 					}
 					else if((butt_f2_down||butt_f2_up||butt_f3_down||butt_car_f2||butt_car_f3)&&!moving&&door_closed) {
+						if(usart_on) {
+							usart_message("F1, departing");
+						}
 						move_up();
 					}
 					break;
@@ -42,25 +51,37 @@ int main(void) {
 				
 				case 2 : {
 					if((butt_f2_down||butt_car_f2)&&loc_floor_2&&moving_down) {
-							if(moving) {
-								move_stop();							
-							}
-							butt_f2_down = 0;
-							butt_car_f2 = 0;
-							open_door();
+						if(moving) {
+							move_stop();							
+						}
+						butt_f2_down = 0;
+						butt_car_f2 = 0;
+						if(usart_on) {
+							usart_message("F2, arrived");
+						}
+						open_door();
 					}
 					else if((butt_f2_up||butt_car_f2)&&loc_floor_2&&moving_up) {
-							if(moving) {
-								move_stop();						
-							}
-							butt_f2_up = 0;
-							butt_car_f2 = 0;
-							open_door();
+						if(moving) {
+							move_stop();						
+						}
+						butt_f2_up = 0;
+						butt_car_f2 = 0;
+						if(usart_on) {
+							usart_message("F2, arrived");
+						}
+						open_door();
 					}					
 					else if((butt_f1_up||butt_car_f1)&&!moving&&door_closed) {
+						if(usart_on) {
+							usart_message("F2, departing");
+						}
 						move_down();
 					}
 					else if((butt_f3_down||butt_car_f3)&&!moving&&door_closed) {
+						if(usart_on) {
+							usart_message("F2, departing");
+						}
 						move_up();
 					}
 					break;
@@ -69,21 +90,26 @@ int main(void) {
 				
 				case 3 : {
 					if((butt_f3_down||butt_car_f3)&&loc_floor_3) {
-							if(moving_up||moving_down) {
-								move_stop();							
-							}						
-							butt_f3_down = 0;
-							butt_car_f3 = 0;
-							open_door();
+						if(moving_up||moving_down) {
+							move_stop();							
+						}						
+						butt_f3_down = 0;
+						butt_car_f3 = 0;
+						if(usart_on) {
+							usart_message("F3, arrived");
+						}
+						open_door();
 					}	
 					else if((butt_f1_up||butt_car_f1||butt_f2_down||butt_f2_up||butt_car_f2)&&!moving&&door_closed) {
-							move_down();
+						if(usart_on) {
+							usart_message("F3, departing");
+						}
+						move_down();
 					}
 					break;
 				}
 			}
-		}
-		
+		}		
 	}
 	
 	
@@ -156,12 +182,19 @@ bool update_inputs(void) {
 
 
 bool move_up(void) {
-	
+	moving_up = 1;
+	if(usart_on) {
+		usart_message("UP, moving");
+	}
 	
 	return 0;
 }
 
 bool move_down(void) {
+	moving_down = 1;
+	if(usart_on) {
+		usart_message("DOWN, moving");
+	}
 	
 	return 0;
 }
@@ -169,13 +202,20 @@ bool move_down(void) {
 bool move_stop(void) {
 	moving_up = 0;
 	moving_down = 0;
-	
+	if(usart_on) {
+		usart_message("STOP, stopping");
+	}
 	
 	return 0;
 }
 
 bool open_door(void) {
 	
+	return 0;
+}
+
+bool usart_message(char* str) {
+		
 	return 0;
 }
 

@@ -5,6 +5,7 @@ typedef bool uint1_t;
 static bool init(void);
 static bool update_inputs(void);
 static bool activate_uart(void);
+static bool usart_message(char* str);
 
 static bool open_door(void); 
 static bool close_door(void);
@@ -35,7 +36,7 @@ static bool butt_car_f2;
 static bool butt_car_f3;
 static bool butt_car_stop;
 
-static bool uart_on = 0;
+static bool usart_on = 0;
 
 
 
