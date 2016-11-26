@@ -16,15 +16,16 @@ int main(void) {
 		
 		bool moving = moving_up||moving_down;
 		
-		if(butt_f1_up||butt_f2_down||butt_f2_up||butt_f3_down||butt_car_f1||butt_car_f2||butt_car_f3) {
-			switch(loc_last) {
-				case 1 : {
-					if(butt_car_stop) {
+		if(butt_f1_up||butt_f2_down||butt_f2_up||butt_f3_down||butt_car_f1||butt_car_f2||butt_car_f3||butt_car_stop) {
+			if(butt_car_stop) {
 						if(moving) {
-							move_stop();
+							butt_car_stop = 0;
+							move_stop();							
 						}
 					}
-					else if((butt_f1_up||butt_car_f1)&&loc_floor_1) {
+			else switch(loc_cur) {
+				case 1 : {
+					if((butt_f1_up||butt_car_f1)&&loc_floor_1) {
 							if(moving_up||moving_down) {
 								move_stop();
 							}														
@@ -32,7 +33,7 @@ int main(void) {
 							butt_car_f1 = 0;
 							open_door();
 					}
-					else if((butt_f2_down||butt_f2_up||butt_f3_down||butt_car_f2||butt_car_f3)&&!moving) {
+					else if((butt_f2_down||butt_f2_up||butt_f3_down||butt_car_f2||butt_car_f3)&&!moving&&door_closed) {
 						move_up();
 					}
 					break;
@@ -40,13 +41,7 @@ int main(void) {
 				
 				
 				case 2 : {
-					if(butt_car_stop) {
-						if(moving) {
-							move_stop();
-						}
-					}
-
-					else if((butt_f2_down||butt_car_f2)&&loc_floor_2&&moving_down) {
+					if((butt_f2_down||butt_car_f2)&&loc_floor_2&&moving_down) {
 							if(moving) {
 								move_stop();							
 							}
@@ -62,10 +57,10 @@ int main(void) {
 							butt_car_f2 = 0;
 							open_door();
 					}					
-					else if((butt_f1_up||butt_car_f1)&&!moving) {
+					else if((butt_f1_up||butt_car_f1)&&!moving&&door_closed) {
 						move_down();
 					}
-					else if((butt_f3_down||butt_car_f3)&&!moving) {
+					else if((butt_f3_down||butt_car_f3)&&!moving&&door_closed) {
 						move_up();
 					}
 					break;
@@ -73,12 +68,7 @@ int main(void) {
 				
 				
 				case 3 : {
-					if(butt_car_stop) {
-						if(moving) {
-							move_stop();
-						}
-					}
-					else if((butt_f3_down||butt_car_f3)&&loc_floor_3) {
+					if((butt_f3_down||butt_car_f3)&&loc_floor_3) {
 							if(moving_up||moving_down) {
 								move_stop();							
 							}						
@@ -86,7 +76,7 @@ int main(void) {
 							butt_car_f3 = 0;
 							open_door();
 					}	
-					else if((butt_f1_up||butt_car_f1||butt_f2_down||butt_f2_up||butt_car_f2)&&!moving) {
+					else if((butt_f1_up||butt_car_f1||butt_f2_down||butt_f2_up||butt_car_f2)&&!moving&&door_closed) {
 							move_down();
 					}
 					break;
@@ -114,15 +104,15 @@ bool init(void) {
 bool update_inputs(void) {
 	if(loc_floor_1 != TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_5)) {
 		loc_floor_1 = !loc_floor_1;
-		loc_last = 1;
+		loc_cur = 1;
 	}
 	if(loc_floor_2 != TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_6)) {
 		loc_floor_2 = !loc_floor_2;
-		loc_last = 2;
+		loc_cur = 2;
 	}
 	if(loc_floor_3 != TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_7)) {
 		loc_floor_3 = !loc_floor_3;
-		loc_last = 3;
+		loc_cur = 3;
 	}
 	
 	

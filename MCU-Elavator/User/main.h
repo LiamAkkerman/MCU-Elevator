@@ -16,10 +16,10 @@ static bool move_stop(void);
 
 
 //TODO intialize all values
-static char loc_last = 0;
-static bool loc_floor_1;
-static bool loc_floor_2;
-static bool loc_floor_3;
+static char loc_cur = 0;
+static bool loc_floor_1 = 0;
+static bool loc_floor_2 = 0;
+static bool loc_floor_3 = 0;
 
 static bool door_closed;
 static bool moving_up;
