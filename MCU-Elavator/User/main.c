@@ -16,7 +16,7 @@ int main(void) {
 		
 		bool moving = (moving_up|moving_down);
 		
-		if(butt_f1_up||butt_f2_down||butt_f2_up||butt_f3_down||butt_car_f1||butt_car_f2||butt_car_f3||butt_car_stop) { 			//if any button is activated
+		if(butt_f1||butt_f2_down||butt_f2_up||butt_f3||butt_car_stop) { 			//if any button is activated
 			if(butt_car_stop) {
 				butt_car_stop = 0;
 				if(usart_on) {
@@ -29,18 +29,17 @@ int main(void) {
 			
 			else switch(loc_cur) {   																										//react according to which floor the carrige is at
 				case 1 : {																																//it's on the 1st floor
-					if((butt_f1_up||butt_car_f1)&&loc_floor_1) {														//if a button calling the first floor was active
+					if(butt_f1&&loc_floor_1) {														//if a button calling the first floor was active
 						if(moving) {
 							move_stop();
 						}														
-						butt_f1_up = 0;																												//turn off the buttons and open the doors
-						butt_car_f1 = 0;
+						butt_f1 = 0;																												//turn off the buttons and open the doors
 						if(usart_on) {
 							usart_message("F1, arrived");
 						}
 						open_door();
 					}
-					else if((butt_f2_down||butt_f2_up||butt_f3_down||butt_car_f2||butt_car_f3)&&!moving&&door_closed) {  				//if a higher floor is called, it's not already moving, and it's ready to go
+					else if((butt_f2_down||butt_f2_up||butt_f3)&&!moving&&door_closed) {  				//if a higher floor is called, it's not already moving, and it's ready to go
 						if(usart_on) {
 							usart_message("F1, departing");
 						}
@@ -51,35 +50,33 @@ int main(void) {
 				
 				
 				case 2 : {																																								//if it's at the 2nd floor
-					if((butt_f2_down||butt_car_f2)&&loc_floor_2&&moving_down) {															//if the carrige is on it's way down and someone at the second floor is going down, pick 'em up
+					if(butt_f2_down&&loc_floor_2&&moving_down) {															//if the carrige is on it's way down and someone at the second floor is going down, pick 'em up
 						if(moving) {
 							move_stop();							
 						}
 						butt_f2_down = 0;
-						butt_car_f2 = 0;
 						if(usart_on) {
 							usart_message("F2, arrived");
 						}
 						open_door();
 					}
-					else if((butt_f2_up||butt_car_f2)&&loc_floor_2&&moving_up) {														//if the carrige is on it's way up and someone at the second floor is going up, pick 'em up
+					else if((butt_f2_up)&&loc_floor_2&&moving_up) {														//if the carrige is on it's way up and someone at the second floor is going up, pick 'em up
 						if(moving) {
 							move_stop();						
 						}
 						butt_f2_up = 0;
-						butt_car_f2 = 0;
 						if(usart_on) {
 							usart_message("F2, arrived");
 						}
 						open_door();
 					}					
-					else if((butt_f1_up||butt_car_f1)&&!moving&&door_closed) {										 					//if a lower floor is called, it's not already moving, and it's ready to go
+					else if(butt_f1&&!moving&&door_closed) {										 					//if a lower floor is called, it's not already moving, and it's ready to go
 						if(usart_on) {
 							usart_message("F2, departing");
 						}
 						move_down();
 					}
-					else if((butt_f3_down||butt_car_f3)&&!moving&&door_closed) {														//if a higher floor is called, it's not already moving, and it's ready to go
+					else if(butt_f3&&!moving&&door_closed) {														//if a higher floor is called, it's not already moving, and it's ready to go
 						if(usart_on) {
 							usart_message("F2, departing");
 						}
@@ -90,18 +87,17 @@ int main(void) {
 				
 				
 				case 3 : {																																								//it's on the 3rd floor
-					if((butt_f3_down||butt_car_f3)&&loc_floor_3) {																					//if the 3rd floor was called
+					if(butt_f3&&loc_floor_3) {																					//if the 3rd floor was called
 						if(moving) {
 							move_stop();							
 						}						
-						butt_f3_down = 0;
-						butt_car_f3 = 0;
+						butt_f3 = 0;
 						if(usart_on) {
 							usart_message("F3, arrived");
 						}
 						open_door();
 					}	
-					else if((butt_f1_up||butt_car_f1||butt_f2_down||butt_f2_up||butt_car_f2)&&!moving&&door_closed) {				//if a lower floor is called, it's not already moving, and it's ready to go
+					else if((butt_f1||butt_f2_down||butt_f2_up)&&!moving&&door_closed) {				//if a lower floor is called, it's not already moving, and it's ready to go
 						if(usart_on) {
 							usart_message("F3, departing");
 						}
@@ -121,7 +117,7 @@ bool init(void) { 																																								//itianize all the pin
 	SystemInit();
 	
 	TM_GPIO_Init(GPIOD, GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10 | GPIO_Pin_11 , TM_GPIO_Mode_IN, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
-	TM_GPIO_Init(GPIOC, GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9 , TM_GPIO_Mode_IN, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+	TM_GPIO_Init(GPIOC, GPIO_Pin_8 | GPIO_Pin_9 , TM_GPIO_Mode_IN, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
 	TM_GPIO_Init(GPIOD, GPIO_Pin_2 | GPIO_Pin_4, TM_GPIO_Mode_OUT, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
 	
 	return 0;
@@ -129,7 +125,7 @@ bool init(void) { 																																								//itianize all the pin
 
 
 bool update_inputs(void) {																																				//poll all the pins for thier values
-	if(loc_floor_1 != TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_5)) {																//trigger switch checking for state changes
+	if(loc_floor_1 != TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_5)) {																//trigger switch checking for state changes of the location switches
 		loc_floor_1 = ~loc_floor_1;																																		//toggle the variable
 		loc_cur = 1;																																									//they also set the current floor, or once it leaves it'll be the latest floor
 	}
@@ -143,28 +139,18 @@ bool update_inputs(void) {																																				//poll all the pin
 	}
 	
 	
-	if(!butt_f1_up && TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_8)) {																//only update variable if the pin is high and the varibale isn't already set
-		butt_f1_up = 1;																																								//the floor call buttons latch until the request has been satisfied
+	if(!butt_f1 && TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_8)) {																//only update variable if the pin is high and the varibale isn't already set
+		butt_f1 = 1;																																							//the floor call buttons latch until the request has been satisfied
+																																															//both the buttons inside and out can be connected to this pin
 	}
-	if(!butt_f2_up && TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_9)) {
+	if(!butt_f2_up && TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_9)) {														//the inside carriage button can be connected to both this pin, and the next one, possibly using diodes or or gates
 		butt_f2_up = 1;
 	}
-	if(!butt_f2_down && TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_10)) {
+	if(!butt_f2_down && TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_10)) {													//connected to the outside F2 up and the inside F2
 		butt_f2_down = 1;
 	}
-	if(!butt_f3_down && TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_11)) {
-		butt_f3_down = 1;
-	}
-	
-	
-	if(!butt_car_f1 && TM_GPIO_GetInputPinValue(GPIOC, GPIO_Pin_5)) {
-		butt_car_f1 = 1;
-	}
-	if(!butt_car_f2 && TM_GPIO_GetInputPinValue(GPIOC, GPIO_Pin_6)) {
-		butt_car_f2 = 1;
-	}
-	if(!butt_car_f3 && TM_GPIO_GetInputPinValue(GPIOC, GPIO_Pin_7)) {
-		butt_car_f3 = 1;
+	if(!butt_f3 && TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_11)) {															//connectedo inside and outside button
+		butt_f3 = 1;
 	}
 	if(!butt_car_stop && TM_GPIO_GetInputPinValue(GPIOC, GPIO_Pin_8)) {
 		butt_car_stop = 1;

@@ -26,14 +26,10 @@ static bool door_closed;
 static bool moving_up;
 static bool moving_down;
 
-static bool butt_f1_up;
+static bool butt_f1;
 static bool butt_f2_down;
 static bool butt_f2_up;
-static bool butt_f3_down;
-
-static bool butt_car_f1;
-static bool butt_car_f2;
-static bool butt_car_f3;
+static bool butt_f3;
 static bool butt_car_stop;
 
 static bool usart_on = 0;
