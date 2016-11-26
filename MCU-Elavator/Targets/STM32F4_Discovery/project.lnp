@@ -1,4 +1,4 @@
---cpu Cortex-M4.fp
+--cpu=Cortex-M4.fp
 ".\targets\stm32f4_discovery\startup_stm32f40_41xxx.o"
 ".\targets\stm32f4_discovery\misc.o"
 ".\targets\stm32f4_discovery\stm32f4xx_rcc.o"
