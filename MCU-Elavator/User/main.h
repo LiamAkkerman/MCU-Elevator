@@ -16,6 +16,7 @@ static bool move_down(void);
 static bool move_stop(void);
 
 
+const int door_delay = 15000000;
 
 //TODO intialize all values
 static char loc_cur = 0;
@@ -34,6 +35,7 @@ static bool butt_f3;
 static bool butt_car_stop;
 
 static bool usart_on = 0;
+const static char* password_value
 
 
 

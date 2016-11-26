@@ -237,7 +237,7 @@ bool door_open(void){
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_11);
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_10);
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_9);
-	for( int i = 0; i<15000000 ; i++){
+	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}
 		
@@ -245,7 +245,7 @@ bool door_open(void){
 	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_11);
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_10);
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_9);
-	for( int i = 0; i<15000000 ; i++){
+	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}
 		
@@ -253,7 +253,7 @@ bool door_open(void){
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_11);
 	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_10);
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_9);
-	for( int i = 0; i<15000000 ; i++){
+	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}	
 		
@@ -261,7 +261,7 @@ bool door_open(void){
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_11);
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_10);
 	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_9);
-	for( int i = 0; i<15000000 ; i++){
+	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}	
 
@@ -273,7 +273,7 @@ bool door_close(void){
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_11);
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_10);
 	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_9);
-	for( int i = 0; i<15000000 ; i++){
+	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}
 		
@@ -281,7 +281,7 @@ bool door_close(void){
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_11);
 	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_10);
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_9);
-	for( int i = 0; i<15000000 ; i++){
+	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}
 		
@@ -289,7 +289,7 @@ bool door_close(void){
 	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_11);
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_10);
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_9);
-	for( int i = 0; i<15000000 ; i++){
+	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}	
 		
@@ -297,9 +297,10 @@ bool door_close(void){
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_11);
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_10);
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_9);
-	for( int i = 0; i<15000000 ; i++){
+	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}	
 	
 	return 0;
 }
+
