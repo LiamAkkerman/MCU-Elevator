@@ -1,0 +1,53 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.21.1.0
+Copyright (C) 2016 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Aladdin Tayeh Simon Fraser University Flex license: MDK-ARM Professional: 100 user(s) (mdk_pro) Operation stops: 27 Sep 2017
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Professional: 100 user(s)  Version: 5.21a
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 3 (build 300)
+Assembler:       Armasm.exe V5.06 update 3 (build 300)
+Linker/Locator:  ArmLink.exe V5.06 update 3 (build 300)
+Library Manager: ArmAr.exe V5.06 update 3 (build 300)
+Hex Converter:   FromElf.exe V5.06 update 3 (build 300)
+CPU DLL:         SARMCM3.DLL V5.21a
+Dialog DLL:      DCM.DLL V1.13.8.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.18.0
+Dialog DLL:      TCM.DLL V1.14.14.0
+ 
+<h2>Project:</h2>
+C:\Users\Student\Documents\MSU-Elavator\MCU-Elavator\project.uvprojx
+Project File Date:  11/25/2016
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 3 (build 300)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Build target 'STM32F4-Discovery'
+assembling startup_stm32f40_41xxx.s...
+compiling main.c...
+User\main.c(94): warning:  #111-D: statement is unreachable
+  	return 0;
+User\main.c(186): error:  #247: function "update_inputs" has already been defined
+  
+ool update_inputs(void) {
+User\main.c(189): warning:  #1-D: last line of file ends without a newline
+  }
+User\main.c(9): warning:  #177-D: function "update_inpits" was declared but never referenced
+  static bool update_inpits(void);
+User\main.c: 3 warnings, 1 error
+".\Targets\STM32F4_Discovery\project.axf" - 1 Error(s), 3 Warning(s).
+
+<h2>Collection of Component include folders:</h2>
+  C:\Users\Student\Documents\MSU-Elavator\MCU-Elavator\RTE
+  C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.10.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
+
+<h2>Collection of Component Files used:</h2>
+Target not created.
+Build Time Elapsed:  00:00:01
+</pre>
+</body>
+</html>
