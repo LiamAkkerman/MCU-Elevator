@@ -117,12 +117,16 @@ int main(void) {
 bool init(void) { 																																								//itianize all the pins and whatever else
 	SystemInit();
 	
-	//TODO change to the actual pins
-	TM_GPIO_Init(GPIOD, GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10 | GPIO_Pin_11 , TM_GPIO_Mode_IN, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
-	TM_GPIO_Init(GPIOC, GPIO_Pin_8 | GPIO_Pin_9 , TM_GPIO_Mode_IN, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
-	TM_GPIO_Init(GPIOD, GPIO_Pin_2 | GPIO_Pin_4, TM_GPIO_Mode_OUT, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+	//Input pins
+	TM_GPIO_Init(GPIOA, GPIO_Pin_10 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15 , TM_GPIO_Mode_IN, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+	TM_GPIO_Init(GPIOC, GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12 , TM_GPIO_Mode_IN, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+	TM_GPIO_Init(GPIOD, GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 , TM_GPIO_Mode_IN, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
 	
-		/* Initialize USART1 at 9600 baud, TX: PB6, RX: PB7 */
+	//output pins
+	TM_GPIO_Init(GPIOB, GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 , TM_GPIO_Mode_OUT, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+	TM_GPIO_Init(GPIOD, GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 , TM_GPIO_Mode_OUT, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+	
+	//Initialize USART1 at 9600 baud, TX: PB6, RX: PB7
 	TM_USART_Init(USART1, TM_USART_PinsPack_2, 9600);
 	
 	return 0;
@@ -130,41 +134,41 @@ bool init(void) { 																																								//itianize all the pin
 
 
 bool update_inputs(void) {																																				//poll all the pins for thier values
-	if(loc_floor_1 != TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_5)) {																//trigger switch checking for state changes of the location switches
+	if(loc_floor_1 != TM_GPIO_GetInputPinValue(GPIOA, GPIO_Pin_15)) {																//trigger switch checking for state changes of the location switches
 		loc_floor_1 = ~loc_floor_1;																																		//toggle the variable
 		loc_cur = 1;																																									//they also set the current floor, or once it leaves it'll be the latest floor
 		bcd_display();
 	}
-	if(loc_floor_2 != TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_6)) {
+	if(loc_floor_2 != TM_GPIO_GetInputPinValue(GPIOC, GPIO_Pin_11)) {
 		loc_floor_2 = ~loc_floor_2;
 		loc_cur = 2;
 		bcd_display();
 	}
-	if(loc_floor_3 != TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_7)) {
+	if(loc_floor_3 != TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_0)) {
 		loc_floor_3 = ~loc_floor_3;
 		loc_cur = 3;
 		bcd_display();
 	}
 	
 	
-	if(!butt_f1 && TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_8)) {																//only update variable if the pin is high and the varibale isn't already set
+	if(!butt_f1 && TM_GPIO_GetInputPinValue(GPIOA, GPIO_Pin_14)) {																//only update variable if the pin is high and the varibale isn't already set
 		butt_f1 = 1;																																							//the floor call buttons latch until the request has been satisfied
 																																															//both the buttons inside and out can be connected to this pin
 	}
-	if(!butt_f2_up && TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_9)) {														//the inside carriage button can be connected to both this pin, and the next one, possibly using diodes or or gates
+	if(!butt_f2_up && TM_GPIO_GetInputPinValue(GPIOC, GPIO_Pin_10)) {														//the inside carriage button can be connected to both this pin, and the next one, possibly using diodes or or gates
 		butt_f2_up = 1;
 	}
-	if(!butt_f2_down && TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_10)) {													//connected to the outside F2 up and the inside F2
+	if(!butt_f2_down && TM_GPIO_GetInputPinValue(GPIOC, GPIO_Pin_12)) {													//connected to the outside F2 up and the inside F2
 		butt_f2_down = 1;
 	}
-	if(!butt_f3 && TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_11)) {															//connectedo inside and outside button
+	if(!butt_f3 && TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_1)) {																//connectedo inside and outside button
 		butt_f3 = 1;
 	}
-	if(!butt_car_stop && TM_GPIO_GetInputPinValue(GPIOC, GPIO_Pin_8)) {
+	if(!butt_car_stop && TM_GPIO_GetInputPinValue(GPIOA, GPIO_Pin_10)) {
 		butt_car_stop = 1;
 	}
 	
-	if(door_closed != TM_GPIO_GetInputPinValue(GPIOC, GPIO_Pin_9)) {
+	if(door_closed != TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_2)) {
 		door_closed = ~door_closed;
 	}
 	
@@ -234,34 +238,34 @@ bool bcd_display(void){
 }
 
 bool door_open(void){
-	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_12);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_11);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_10);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_9);
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_7);
+	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_3);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_5);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_6);
 	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}
 		
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_12);
-	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_11);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_10);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_9);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_7);
+	TM_GPIO_SetPinHigh(GPIOB, GPIO_Pin_3);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_5);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_6);
 	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}
 		
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_12);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_11);
-	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_10);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_9);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_7);
+	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_3);
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_5);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_6);
 	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}	
 		
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_12);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_11);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_10);
-	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_9);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_7);
+	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_3);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_5);
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_6);
 	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}	
@@ -270,34 +274,34 @@ bool door_open(void){
 }
 
 bool door_close(void){
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_12);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_11);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_10);
-	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_9);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_7);
+	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_3);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_5);
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_6);
 	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}
 		
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_12);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_11);
-	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_10);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_9);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_7);
+	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_3);
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_5);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_6);
 	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}
 		
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_12);
-	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_11);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_10);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_9);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_7);
+	TM_GPIO_SetPinHigh(GPIOB, GPIO_Pin_3);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_5);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_6);
 	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}	
 		
-	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_12);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_11);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_10);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_9);
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_7);
+	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_3);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_5);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_6);
 	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}	
