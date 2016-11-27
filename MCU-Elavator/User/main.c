@@ -238,32 +238,19 @@ bool bcd_display(void){
 }
 
 bool door_open(void){
-	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_7);
-	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_3);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_5);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_6);
-	for( int i = 0; i<door_delay ; i++){
-		update_inputs();
-	}
 		
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_7);
 	TM_GPIO_SetPinHigh(GPIOB, GPIO_Pin_3);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_5);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_6);
 	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}
 		
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_7);
 	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_3);
 	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_5);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_6);
 	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}	
 		
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_7);
-	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_3);
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_5);
 	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_6);
 	for( int i = 0; i<door_delay ; i++){
@@ -274,34 +261,21 @@ bool door_open(void){
 }
 
 bool door_close(void){
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_7);
-	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_3);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_5);
-	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_6);
-	for( int i = 0; i<door_delay ; i++){
-		update_inputs();
-	}
 		
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_7);
-	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_3);
 	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_5);
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_6);
 	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}
 		
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_7);
 	TM_GPIO_SetPinHigh(GPIOB, GPIO_Pin_3);
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_5);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_6);
 	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}	
 		
 	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_7);
 	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_3);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_5);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_6);
 	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}	
