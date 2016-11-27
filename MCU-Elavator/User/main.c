@@ -26,33 +26,34 @@ int main(void) {
 				if(moving) {						
 					move_stop();							
 				}
-				while(!butt_car_stop) {
-					update_critical();
+				while(!butt_car_stop) {																														//wait for the stop button to be pressed again
+					update_critical();																															//only update the stop and reset button
 				}				
 			} 
-			else if(butt_car_reset) {
-				butt_f1 = 0;
+			else if(butt_car_reset) {																														//if the car needs to be reset
+				butt_f1 = 0;																																			//reset all button presses
 				butt_f2_down = 0;
 				butt_f2_up = 0;
 				butt_f3 = 0;
 				butt_car_stop = 0;
-				butt_car_reset = 0;
+				butt_car_reset = 0;																					
 				if(usart_on) {
 					usart_message("RESET\n");
 				}
 				
-				if(!loc_floor_1) {
-					move_down();
+				if(!loc_floor_1) {																																//check to see if it needs to move
+					move_down();																																		//if it isn't on the bottom floor already go downn
 					
-					while(!loc_floor_1) {
-						update_inputs();
+					while(!loc_floor_1) {																														//move until the bottom floor is reached
+						update_inputs();																															//TODO make funtion to only retreive location, not buttons
 					}
 					
 					move_stop();
 				}
-				door_open();
+				door_open();																																			//TODO this causes isues becuase it calls update_inputs(), maybe change the delay?
 				
-				while(1);			
+				while(1);																																					//stay like this indefinetly? seems wrong
+				
 			}
 			else switch(loc_cur) {   																										//react according to which floor the carrige is at
 				case 1 : {																																//it's on the 1st floor
