@@ -9,8 +9,8 @@ static bool usart_message(char* str);
 static bool bcd_display(void);
 
 
-static bool open_door(void); 
-static bool close_door(void);
+static bool door_open(void); 
+static bool door_close(void);
 static bool move_up(void);
 static bool move_down(void);
 static bool move_stop(void);
@@ -35,7 +35,7 @@ static bool butt_f3;
 static bool butt_car_stop;
 
 static bool usart_on = 0;
-const static char* password_value
+const static char* password_correct = "MSE Rocks!";
 
 
 

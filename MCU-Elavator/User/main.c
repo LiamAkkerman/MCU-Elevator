@@ -5,6 +5,7 @@
 #include "defines.h"
 #include "tm_stm32f4_delay.h"
 #include "tm_stm32f4_gpio.h"
+#include "tm_stm32f4_usart.h"
 
 int main(void) {
 	init();
@@ -20,7 +21,7 @@ int main(void) {
 			if(butt_car_stop) {
 				butt_car_stop = 0;
 				if(usart_on) {
-					usart_message("EMERGENCY STOP ACTIVATED!");
+					usart_message("EMERGENCY STOP ACTIVATED!\n");
 				}
 				if(moving) {						
 					move_stop();							
@@ -35,13 +36,13 @@ int main(void) {
 						}														
 						butt_f1 = 0;																												//turn off the buttons and open the doors
 						if(usart_on) {
-							usart_message("F1, arrived");
+							usart_message("F1, arrived\n");
 						}
-						open_door();
+						door_open();
 					}
 					else if((butt_f2_down||butt_f2_up||butt_f3)&&!moving&&door_closed) {  				//if a higher floor is called, it's not already moving, and it's ready to go
 						if(usart_on) {
-							usart_message("F1, departing");
+							usart_message("F1, departing\n");
 						}
 						move_up();																																																//go up
 					}
@@ -56,9 +57,9 @@ int main(void) {
 						}
 						butt_f2_down = 0;
 						if(usart_on) {
-							usart_message("F2, arrived");
+							usart_message("F2, arrived\n");
 						}
-						open_door();
+						door_open();
 					}
 					else if((butt_f2_up)&&loc_floor_2&&moving_up) {														//if the carrige is on it's way up and someone at the second floor is going up, pick 'em up
 						if(moving) {
@@ -66,19 +67,19 @@ int main(void) {
 						}
 						butt_f2_up = 0;
 						if(usart_on) {
-							usart_message("F2, arrived");
+							usart_message("F2, arrived\n");
 						}
-						open_door();
+						door_open();
 					}					
 					else if(butt_f1&&!moving&&door_closed) {										 					//if a lower floor is called, it's not already moving, and it's ready to go
 						if(usart_on) {
-							usart_message("F2, departing");
+							usart_message("F2, departing\n");
 						}
 						move_down();
 					}
 					else if(butt_f3&&!moving&&door_closed) {														//if a higher floor is called, it's not already moving, and it's ready to go
 						if(usart_on) {
-							usart_message("F2, departing");
+							usart_message("F2, departing\n");
 						}
 						move_up();
 					}
@@ -93,13 +94,13 @@ int main(void) {
 						}						
 						butt_f3 = 0;
 						if(usart_on) {
-							usart_message("F3, arrived");
+							usart_message("F3, arrived\n");
 						}
-						open_door();
+						door_open();
 					}	
 					else if((butt_f1||butt_f2_down||butt_f2_up)&&!moving&&door_closed) {				//if a lower floor is called, it's not already moving, and it's ready to go
 						if(usart_on) {
-							usart_message("F3, departing");
+							usart_message("F3, departing\n");
 						}
 						move_down();
 					}
@@ -120,6 +121,9 @@ bool init(void) { 																																								//itianize all the pin
 	TM_GPIO_Init(GPIOD, GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10 | GPIO_Pin_11 , TM_GPIO_Mode_IN, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
 	TM_GPIO_Init(GPIOC, GPIO_Pin_8 | GPIO_Pin_9 , TM_GPIO_Mode_IN, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
 	TM_GPIO_Init(GPIOD, GPIO_Pin_2 | GPIO_Pin_4, TM_GPIO_Mode_OUT, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+	
+		/* Initialize USART1 at 9600 baud, TX: PB6, RX: PB7 */
+	TM_USART_Init(USART1, TM_USART_PinsPack_2, 9600);
 	
 	return 0;
 }
@@ -175,7 +179,7 @@ bool update_inputs(void) {																																				//poll all the pin
 bool move_up(void) {
 	moving_up = 1;
 	if(usart_on) {
-		usart_message("UP, moving");
+		usart_message("UP, moving\n");
 	}
 	
 	return 0;
@@ -184,7 +188,7 @@ bool move_up(void) {
 bool move_down(void) {
 	moving_down = 1;
 	if(usart_on) {
-		usart_message("DOWN, moving");
+		usart_message("DOWN, moving\n");
 	}
 	
 	return 0;
@@ -194,19 +198,16 @@ bool move_stop(void) {
 	moving_up = 0;
 	moving_down = 0;
 	if(usart_on) {
-		usart_message("STOP, stopping");
+		usart_message("STOP, stopping\n");
 	}
 	
 	return 0;
 }
 
-bool open_door(void) {
-	//TODO get from Hriday
-	return 0;
-}
+
 
 bool usart_message(char* str) {
-	//TODO get from Hriday	
+	TM_USART_Puts(USART1, str);
 	return 0;
 }
 
