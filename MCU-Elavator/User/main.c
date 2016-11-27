@@ -17,7 +17,7 @@ int main(void) {
 		
 		bool moving = (moving_up|moving_down);
 		
-		if(butt_f1||butt_f2_down||butt_f2_up||butt_f3||butt_car_stop) { 			//if any button is activated
+		if(butt_f1||butt_f2_down||butt_f2_up||butt_f3||butt_car_stop||butt_car_reset) { 			//if any button is activated
 			if(butt_car_stop) {
 				butt_car_stop = 0;
 				if(usart_on) {
@@ -26,15 +26,41 @@ int main(void) {
 				if(moving) {						
 					move_stop();							
 				}
+				while(!butt_car_stop) {
+					update_critical();
+				}				
+			} 
+			else if(butt_car_reset) {
+				butt_f1 = 0;
+				butt_f2_down = 0;
+				butt_f2_up = 0;
+				butt_f3 = 0;
+				butt_car_stop = 0;
+				butt_car_reset = 0;
+				if(usart_on) {
+					usart_message("RESET\n");
+				}
+				
+				if(!loc_floor_1) {
+					move_down();
+					
+					while(!loc_floor_1) {
+						update_inputs();
+					}
+					
+					move_stop();
+				}
+				door_open();
+				
+				while(1);			
 			}
-			
 			else switch(loc_cur) {   																										//react according to which floor the carrige is at
 				case 1 : {																																//it's on the 1st floor
-					if(butt_f1&&loc_floor_1) {														//if a button calling the first floor was active
+					if(butt_f1&&loc_floor_1) {																							//if a button calling the first floor was active
 						if(moving) {
 							move_stop();
 						}														
-						butt_f1 = 0;																												//turn off the buttons and open the doors
+						butt_f1 = 0;																													//turn off the buttons and open the doors
 						if(usart_on) {
 							usart_message("F1, arrived\n");
 						}
@@ -132,8 +158,17 @@ bool init(void) { 																																								//itianize all the pin
 	return 0;
 }
 
+bool update_critical(void) {																																			//inputs that always need to be updated
+	if(!butt_car_stop && TM_GPIO_GetInputPinValue(GPIOA, GPIO_Pin_10)) {
+		butt_car_stop = 1;
+	}
+	if(!butt_car_reset && TM_GPIO_GetInputPinValue(GPIOA, GPIO_Pin_13)) {
+		butt_car_reset = 1;
+	}	
+}
 
 bool update_inputs(void) {																																				//poll all the pins for thier values
+	update_critical();
 	if(loc_floor_1 != TM_GPIO_GetInputPinValue(GPIOA, GPIO_Pin_15)) {																//trigger switch checking for state changes of the location switches
 		loc_floor_1 = ~loc_floor_1;																																		//toggle the variable
 		loc_cur = 1;																																									//they also set the current floor, or once it leaves it'll be the latest floor
@@ -166,6 +201,9 @@ bool update_inputs(void) {																																				//poll all the pin
 	}
 	if(!butt_car_stop && TM_GPIO_GetInputPinValue(GPIOA, GPIO_Pin_10)) {
 		butt_car_stop = 1;
+	}
+	if(!butt_car_reset && TM_GPIO_GetInputPinValue(GPIOA, GPIO_Pin_13)) {
+		butt_car_reset = 1;
 	}
 	
 	if(door_closed != TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_2)) {
