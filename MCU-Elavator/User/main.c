@@ -186,6 +186,8 @@ bool move_up(void) {
 		usart_message("UP, moving\n");
 	}
 	
+	TM_GPIO_SetPinHigh(GPIOB, GPIO_Pin_4);
+	
 	return 0;
 }
 
@@ -194,6 +196,8 @@ bool move_down(void) {
 	if(usart_on) {
 		usart_message("DOWN, moving\n");
 	}
+	
+	TM_GPIO_SetPinHigh(GPIOB, GPIO_Pin_5);
 	
 	return 0;
 }
@@ -218,18 +222,18 @@ bool usart_message(char* str) {
 bool bcd_display(void){
 	switch(loc_cur) {
 		case 1 : {
-			TM_GPIO_SetPinLow(GPIOC, GPIO_Pin_12);
-			TM_GPIO_SetPinHigh(GPIOC, GPIO_Pin_10);
+			TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_4);
+			TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_3);
 			break;
 		}
 		case 2 : {
-			TM_GPIO_SetPinHigh(GPIOC, GPIO_Pin_12);
-			TM_GPIO_SetPinLow(GPIOC, GPIO_Pin_10);	
+			TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_4);
+			TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_3);	
 			break;	
 		}	
 		case 3 : {
-			TM_GPIO_SetPinHigh(GPIOC, GPIO_Pin_12);
-			TM_GPIO_SetPinHigh(GPIOC, GPIO_Pin_10);
+			TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_4);
+			TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_3);
 			break;
 		}		
 	}
@@ -238,6 +242,9 @@ bool bcd_display(void){
 }
 
 bool door_open(void){
+	if(usart_on) {
+		usart_message("OPEN, doors\n");
+	}
 		
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_7);
 	TM_GPIO_SetPinHigh(GPIOB, GPIO_Pin_3);
@@ -261,7 +268,10 @@ bool door_open(void){
 }
 
 bool door_close(void){
-		
+	if(usart_on) {
+		usart_message("CLOSE, doors\n");
+	}
+	
 	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_5);
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_6);
 	for( int i = 0; i<door_delay ; i++){
