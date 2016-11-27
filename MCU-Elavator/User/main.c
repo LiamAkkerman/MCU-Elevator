@@ -209,6 +209,9 @@ bool move_stop(void) {
 		usart_message("STOP, stopping\n");
 	}
 	
+	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_4);
+	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_5);
+	
 	return 0;
 }
 
