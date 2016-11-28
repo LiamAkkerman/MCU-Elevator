@@ -40,7 +40,6 @@ static bool butt_car_reset;
 
 static bool usart_on = 0;
 const static char* password_correct = "MSE Rocks!";
-
-
+static char pass_array[12];
 
 

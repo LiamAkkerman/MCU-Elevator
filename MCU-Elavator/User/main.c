@@ -26,8 +26,8 @@ int main(void) {
 				if(moving) {						
 					move_stop();							
 				}
-				while(!butt_car_stop) {																														//wait for the stop button to be pressed again
-					update_critical();																															//only update the stop and reset button
+				while(!butt_car_stop) {																						//wait for the stop button to be pressed again
+					update_critical();																						 //only update the stop and reset button
 				}				
 			} 
 			else if(butt_car_reset) {																														//if the car needs to be reset
@@ -45,15 +45,17 @@ int main(void) {
 					move_down();																																		//if it isn't on the bottom floor already go downn
 					
 					while(!loc_floor_1) {																														//move until the bottom floor is reached
-						update_inputs();																															//TODO make funtion to only retreive location, not buttons
-					}
+						                 																															//TODO make funtion to only retreive location, not buttons
+					}                                                                               // hriday - we dont need that function as once the reset is pressed it should just comme to floor one and make every input zero
 					
 					move_stop();
 				}
 				door_open();																																			//TODO this causes isues becuase it calls update_inputs(), maybe change the delay?
-				
-				while(1);																																					//stay like this indefinetly? seems wrong
-				
+				for( int i = 0; i< 1000000000; i++){
+				// keep the door open for a longer while
+				}
+																	 																				          //stay like this indefinetly? seems wrong
+				                                                                            // hriday - doors just open for a longer while than usual
 			}
 			else switch(loc_cur) {   																										//react according to which floor the carrige is at
 				case 1 : {																																//it's on the 1st floor
@@ -239,7 +241,7 @@ bool move_down(void) {
 	TM_GPIO_SetPinHigh(GPIOB, GPIO_Pin_5);
 	
 	return 0;
-}
+} 
 
 bool move_stop(void) {
 	moving_up = 0;
@@ -330,8 +332,23 @@ bool door_close(void){
 	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_3);
 	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
-	}	
+	}	  
 	
 	return 0;
 }
 
+bool check_password(void){
+usart_message("Input Password\n");
+TM_USART_Gets(USART1, pass_array, sizeof(pass_array));
+	
+	for(int i = 0; i < 12; i++){
+		
+		if ( pass_array[0] == 'M' && pass_array[0] == 'S' && pass_array[0] == 'E' && pass_array[0] == ' ' && pass_array[0] == 'R' && pass_array[0] == 'o' && pass_array[0] == 'c' && pass_array[0] == 'k' && pass_array[0] == 's' && pass_array[0] == '!' ){
+	   usart_on = 1;
+		} 
+		else{
+		TM_USART_ClearBuffer(USART1);
+		usart_message("Password Incorrect, Please enter again\n");		
+		}
+	}
+}
