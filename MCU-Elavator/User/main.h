@@ -11,6 +11,7 @@ static bool bcd_display(void);
 
 
 static bool door_open(void); 
+static bool door_open_critical(void); 
 static bool door_close(void);
 static bool door_cycle(void);
 static bool move_up(void);

@@ -52,7 +52,7 @@ int main(void) {
 					
 					move_stop();
 				}
-				door_open();																																			//TODO this causes isues becuase it calls update_inputs(), maybe change the delay?
+				door_open_critical();																																			//TODO this causes isues becuase it calls update_inputs(), maybe change the delay?
 				for( int i = 0; i< 12*door_delay; i++);																							// keep the door open for a longer while
 			}
 			
@@ -116,8 +116,8 @@ int main(void) {
 				}
 				
 				
-				case 3 : {																																								//it's on the 3rd floor
-					if(butt_f3&&loc_floor_3) {																					//if the 3rd floor was called
+				case 3 : {																																			//it's on the 3rd floor
+					if(butt_f3&&loc_floor_3) {																										//if the 3rd floor was called
 						if(moving) {
 							move_stop();							
 						}						
@@ -127,7 +127,7 @@ int main(void) {
 						}
 						door_open();
 					}	
-					else if((butt_f1||butt_f2_down||butt_f2_up)&&!moving&&door_closed) {				//if a lower floor is called, it's not already moving, and it's ready to go
+					else if((butt_f1||butt_f2_down||butt_f2_up)&&!moving&&door_closed) {					//if a lower floor is called, it's not already moving, and it's ready to go
 						if(usart_on) {
 							usart_message("F3, departing\n");
 						}
@@ -312,6 +312,29 @@ bool door_open(void){
 
 	return 0;
 }
+
+bool door_open_critical(void) {
+	if(usart_on) {
+		usart_message("OPEN, doors, without update\n");
+	}
+	
+	door_closed = 0;
+		
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_7);
+	TM_GPIO_SetPinHigh(GPIOB, GPIO_Pin_3);
+	for( int i = 0; i<door_delay ; i++);
+		
+	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_3);
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_5);
+	for( int i = 0; i<door_delay ; i++);
+		
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_5);
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_6);
+	for( int i = 0; i<door_delay ; i++);
+
+	return 0;
+}
+
 
 bool door_close(void){
 	if(usart_on) {
