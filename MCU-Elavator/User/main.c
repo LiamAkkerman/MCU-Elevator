@@ -13,9 +13,13 @@ int main(void) {
 	
 	
 	while(1) {
-		update_inputs();
-		
+		update_inputs();		
 		bool moving = (moving_up|moving_down);
+		
+		if(!door_closed) {
+			door_close();
+		}
+			
 		
 		if(butt_f1||butt_f2_down||butt_f2_up||butt_f3||butt_car_stop||butt_car_reset) { 			//if any button is activated
 			if(butt_car_stop) {
@@ -44,19 +48,15 @@ int main(void) {
 				if(!loc_floor_1) {																																//check to see if it needs to move
 					move_down();																																		//if it isn't on the bottom floor already go downn
 					
-					while(!loc_floor_1) {																														//move until the bottom floor is reached
-						                 																															//TODO make funtion to only retreive location, not buttons
-					}                                                                               // hriday - we dont need that function as once the reset is pressed it should just comme to floor one and make every input zero
+					while(!loc_floor_1);																														//move until the bottom floor is reached						                 																															                                                                             
 					
 					move_stop();
 				}
 				door_open();																																			//TODO this causes isues becuase it calls update_inputs(), maybe change the delay?
-				for( int i = 0; i< 1000000000; i++){
-				// keep the door open for a longer while
-				}
-																	 																				          //stay like this indefinetly? seems wrong
-				                                                                            // hriday - doors just open for a longer while than usual
+				for( int i = 0; i< 12*door_delay; i++);																							// keep the door open for a longer while
 			}
+			
+			
 			else switch(loc_cur) {   																										//react according to which floor the carrige is at
 				case 1 : {																																//it's on the 1st floor
 					if(butt_f1&&loc_floor_1) {																							//if a button calling the first floor was active
@@ -289,6 +289,8 @@ bool door_open(void){
 	if(usart_on) {
 		usart_message("OPEN, doors\n");
 	}
+	
+	door_closed = 0;
 		
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_7);
 	TM_GPIO_SetPinHigh(GPIOB, GPIO_Pin_3);
@@ -332,7 +334,17 @@ bool door_close(void){
 	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_3);
 	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
-	}	  
+	}	
+
+	door_closed = 1;
+	
+	return 0;
+}
+
+bool door_cycle(void) {
+	door_open();
+	for( int i = 0; i< 12*door_delay; i++);	
+	door_close();
 	
 	return 0;
 }
