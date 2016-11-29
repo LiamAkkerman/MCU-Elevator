@@ -10,19 +10,19 @@
 int main(void) {
 	init();
 	
+	bool moving;
 	
 	
 	while(1) {
 		update_inputs();		
-		bool moving = (moving_up|moving_down);
 		
-		if(!door_closed) {
-			door_close();
-		}
 			
-		
 		if(butt_f1||butt_f2_down||butt_f2_up||butt_f3||butt_car_stop||butt_car_reset) { 			//if any button is activated
-			if(butt_car_stop) {
+			moving = (moving_up|moving_down);
+			if(!door_closed) { 																																	//close doors if they're open. probably only open from reset function.
+				door_close();
+			}
+			if(butt_car_stop) {																																	//emergency stop activated. stops motion, but doors don't
 				butt_car_stop = 0;
 				if(usart_on) {
 					usart_message("EMERGENCY STOP ACTIVATED!\n");
@@ -30,8 +30,8 @@ int main(void) {
 				if(moving) {						
 					move_stop();							
 				}
-				while(!butt_car_stop) {																						//wait for the stop button to be pressed again
-					update_critical();																						 //only update the stop and reset button
+				while(!butt_car_stop) {																														//wait for the stop button to be pressed again
+					update_critical();																															//only update the stop and reset button
 				}				
 			} 
 			else if(butt_car_reset) {																														//if the car needs to be reset
@@ -67,7 +67,7 @@ int main(void) {
 						if(usart_on) {
 							usart_message("F1, arrived\n");
 						}
-						door_open();
+						door_cycle();
 					}
 					else if((butt_f2_down||butt_f2_up||butt_f3)&&!moving&&door_closed) {  				//if a higher floor is called, it's not already moving, and it's ready to go
 						if(usart_on) {
@@ -88,7 +88,7 @@ int main(void) {
 						if(usart_on) {
 							usart_message("F2, arrived\n");
 						}
-						door_open();
+						door_cycle();
 					}
 					else if((butt_f2_up)&&loc_floor_2&&moving_up) {														//if the carrige is on it's way up and someone at the second floor is going up, pick 'em up
 						if(moving) {
@@ -98,7 +98,7 @@ int main(void) {
 						if(usart_on) {
 							usart_message("F2, arrived\n");
 						}
-						door_open();
+						door_cycle();
 					}					
 					else if(butt_f1&&!moving&&door_closed) {										 					//if a lower floor is called, it's not already moving, and it's ready to go
 						if(usart_on) {
@@ -125,7 +125,7 @@ int main(void) {
 						if(usart_on) {
 							usart_message("F3, arrived\n");
 						}
-						door_open();
+						door_cycle();
 					}	
 					else if((butt_f1||butt_f2_down||butt_f2_up)&&!moving&&door_closed) {					//if a lower floor is called, it's not already moving, and it's ready to go
 						if(usart_on) {
@@ -227,7 +227,7 @@ bool move_up(void) {
 		usart_message("UP, moving\n");
 	}
 	
-	TM_GPIO_SetPinHigh(GPIOB, GPIO_Pin_4);
+	TM_GPIO_SetPinHigh(GPIOB, GPIO_Pin_4);																					//TODO fix pins to active low
 	
 	return 0;
 }
@@ -238,7 +238,7 @@ bool move_down(void) {
 		usart_message("DOWN, moving\n");
 	}
 	
-	TM_GPIO_SetPinHigh(GPIOB, GPIO_Pin_5);
+	TM_GPIO_SetPinHigh(GPIOB, GPIO_Pin_5);																					//TODO fix pins to active low
 	
 	return 0;
 } 
@@ -250,7 +250,7 @@ bool move_stop(void) {
 		usart_message("STOP, stopping\n");
 	}
 	
-	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_4);
+	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_4);																					//TODO fix pins to active low
 	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_5);
 	
 	return 0;
@@ -266,7 +266,7 @@ bool usart_message(char* str) {
 bool bcd_display(void){
 	switch(loc_cur) {
 		case 1 : {
-			TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_4);
+			TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_4);																					//TODO fix pins to active low, if this is also active low
 			TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_3);
 			break;
 		}
@@ -292,9 +292,9 @@ bool door_open(void){
 	
 	door_closed = 0;
 		
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_7);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_7);																					//TODO fix pins to active low
 	TM_GPIO_SetPinHigh(GPIOB, GPIO_Pin_3);
-	for( int i = 0; i<door_delay ; i++){
+	for( int i = 0; i<door_delay ; i++){																					//wait for a certain amount of time, constantly updating the inputs
 		update_inputs();
 	}
 		
@@ -313,14 +313,14 @@ bool door_open(void){
 	return 0;
 }
 
-bool door_open_critical(void) {
+bool door_open_critical(void) {																								//doors open without updating buttons
 	if(usart_on) {
 		usart_message("OPEN, doors, without update\n");
 	}
 	
 	door_closed = 0;
 		
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_7);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_7);																					//TODO fix pins to active low
 	TM_GPIO_SetPinHigh(GPIOB, GPIO_Pin_3);
 	for( int i = 0; i<door_delay ; i++);
 		
@@ -341,7 +341,7 @@ bool door_close(void){
 		usart_message("CLOSE, doors\n");
 	}
 	
-	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_5);
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_5);																					//TODO fix pins to active low
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_6);
 	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
@@ -364,7 +364,7 @@ bool door_close(void){
 	return 0;
 }
 
-bool door_cycle(void) {
+bool door_cycle(void) {																													//open doors, wait, then close doors
 	door_open();
 	for( int i = 0; i< 12*door_delay; i++);	
 	door_close();
@@ -372,7 +372,7 @@ bool door_cycle(void) {
 	return 0;
 }
 
-bool check_password(void){
+bool check_password(void){																			//TODO make this work
 usart_message("Input Password\n");
 TM_USART_Gets(USART1, pass_array, sizeof(pass_array));
 	
