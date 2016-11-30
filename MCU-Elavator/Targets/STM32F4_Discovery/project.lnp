@@ -9,7 +9,6 @@
 ".\targets\stm32f4_discovery\tm_stm32f4_gpio.o"
 ".\targets\stm32f4_discovery\tm_stm32f4_usart.o"
 ".\targets\stm32f4_discovery\main.o"
-".\targets\stm32f4_discovery\stm32f4xx_it.o"
 ".\targets\stm32f4_discovery\system_stm32f4xx.o"
 --library_type=microlib --strict --scatter ".\Targets\STM32F4_Discovery\project.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols

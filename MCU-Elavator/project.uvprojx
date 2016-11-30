@@ -662,11 +662,6 @@
               <FilePath>.\User\stm32f4xx_conf.h</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_it.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\User\stm32f4xx_it.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f4xx_it.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\stm32f4xx_it.h</FilePath>
@@ -1335,11 +1330,6 @@
               <FilePath>.\User\stm32f4xx_conf.h</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_it.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\User\stm32f4xx_it.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f4xx_it.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\stm32f4xx_it.h</FilePath>
@@ -2006,11 +1996,6 @@
               <FileName>stm32f4xx_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\stm32f4xx_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_it.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\User\stm32f4xx_it.c</FilePath>
             </File>
             <File>
               <FileName>stm32f4xx_it.h</FileName>
@@ -2682,11 +2667,6 @@
               <FilePath>.\User\stm32f4xx_conf.h</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_it.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\User\stm32f4xx_it.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f4xx_it.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\stm32f4xx_it.h</FilePath>
@@ -3353,11 +3333,6 @@
               <FileName>stm32f4xx_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\stm32f4xx_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_it.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\User\stm32f4xx_it.c</FilePath>
             </File>
             <File>
               <FileName>stm32f4xx_it.h</FileName>
@@ -4028,11 +4003,6 @@
               <FilePath>.\User\stm32f4xx_conf.h</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_it.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\User\stm32f4xx_it.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f4xx_it.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\stm32f4xx_it.h</FilePath>
@@ -4701,11 +4671,6 @@
               <FilePath>.\User\stm32f4xx_conf.h</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_it.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\User\stm32f4xx_it.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f4xx_it.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\stm32f4xx_it.h</FilePath>
@@ -5372,11 +5337,6 @@
               <FileName>stm32f4xx_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\stm32f4xx_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_it.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\User\stm32f4xx_it.c</FilePath>
             </File>
             <File>
               <FileName>stm32f4xx_it.h</FileName>

@@ -52,7 +52,7 @@ int main(void) {
 					
 					move_stop();
 				}
-				door_open_critical();																																			//TODO this causes isues becuase it calls update_inputs(), maybe change the delay?
+				door_open_critical();
 				for( int i = 0; i< 12*door_delay; i++);																							// keep the door open for a longer while
 			}
 			
@@ -147,13 +147,15 @@ bool init(void) { 																																								//itianize all the pin
 	SystemInit();
 	
 	//Input pins
-	TM_GPIO_Init(GPIOA, GPIO_Pin_10 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15 , TM_GPIO_Mode_IN, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
-	TM_GPIO_Init(GPIOC, GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12 , TM_GPIO_Mode_IN, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
-	TM_GPIO_Init(GPIOD, GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 , TM_GPIO_Mode_IN, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+	TM_GPIO_Init(GPIOA, GPIO_Pin_13 , TM_GPIO_Mode_IN, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+	TM_GPIO_Init(GPIOB, GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 , TM_GPIO_Mode_IN, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+	TM_GPIO_Init(GPIOC, GPIO_Pin_10 | GPIO_Pin_12 , TM_GPIO_Mode_IN, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+	TM_GPIO_Init(GPIOD, GPIO_Pin_1 | GPIO_Pin_4 | GPIO_Pin_6 | GPIO_Pin_7 , TM_GPIO_Mode_IN, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
 	
 	//output pins
-	TM_GPIO_Init(GPIOB, GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 , TM_GPIO_Mode_OUT, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
-	TM_GPIO_Init(GPIOD, GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 , TM_GPIO_Mode_OUT, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+	TM_GPIO_Init(GPIOA, GPIO_Pin_10 | GPIO_Pin_14 | GPIO_Pin_15 , TM_GPIO_Mode_OUT, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+	TM_GPIO_Init(GPIOC, GPIO_Pin_11 , TM_GPIO_Mode_OUT, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+	TM_GPIO_Init(GPIOD, GPIO_Pin_0 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_5 , TM_GPIO_Mode_OUT, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
 	
 	//Initialize USART1 at 9600 baud, TX: PB6, RX: PB7
 	TM_USART_Init(USART1, TM_USART_PinsPack_2, 9600);
@@ -162,51 +164,47 @@ bool init(void) { 																																								//itianize all the pin
 }
 
 bool update_critical(void) {																																			//inputs that always need to be updated
-	if(!butt_car_stop && TM_GPIO_GetInputPinValue(GPIOA, GPIO_Pin_10)) {
+	if(!butt_car_stop && TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_4)) {
 		butt_car_stop = 1;
 	}
-	if(!butt_car_reset && TM_GPIO_GetInputPinValue(GPIOA, GPIO_Pin_13)) {
+	if(!butt_car_reset && TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_6)) {
 		butt_car_reset = 1;
 	}	
+	
+	return 0;
 }
 
 bool update_inputs(void) {																																				//poll all the pins for thier values
 	update_critical();
-	if(loc_floor_1 != TM_GPIO_GetInputPinValue(GPIOA, GPIO_Pin_15)) {																//trigger switch checking for state changes of the location switches
+	if(loc_floor_1 == TM_GPIO_GetInputPinValue(GPIOC, GPIO_Pin_10)) {																//trigger switch checking for state changes of the location switches
 		loc_floor_1 = ~loc_floor_1;																																		//toggle the variable
 		loc_cur = 1;																																									//they also set the current floor, or once it leaves it'll be the latest floor
 		bcd_display();
 	}
-	if(loc_floor_2 != TM_GPIO_GetInputPinValue(GPIOC, GPIO_Pin_11)) {
+	if(loc_floor_2 == TM_GPIO_GetInputPinValue(GPIOC, GPIO_Pin_12)) {																//location sensors are active low, thus the ==, not !=
 		loc_floor_2 = ~loc_floor_2;
 		loc_cur = 2;
 		bcd_display();
 	}
-	if(loc_floor_3 != TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_0)) {
+	if(loc_floor_3 == TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_1)) {
 		loc_floor_3 = ~loc_floor_3;
 		loc_cur = 3;
 		bcd_display();
 	}
 	
 	
-	if(!butt_f1 && TM_GPIO_GetInputPinValue(GPIOA, GPIO_Pin_14)) {																//only update variable if the pin is high and the varibale isn't already set
+	if(!butt_f1 && TM_GPIO_GetInputPinValue(GPIOB, GPIO_Pin_3)) {																//only update variable if the pin is high and the varibale isn't already set
 		butt_f1 = 1;																																							//the floor call buttons latch until the request has been satisfied
 																																															//both the buttons inside and out can be connected to this pin
 	}
-	if(!butt_f2_up && TM_GPIO_GetInputPinValue(GPIOC, GPIO_Pin_10)) {														//the inside carriage button can be connected to both this pin, and the next one, possibly using diodes or or gates
+	if(!butt_f2_up && TM_GPIO_GetInputPinValue(GPIOB, GPIO_Pin_4)) {														//the inside carriage button can be connected to both this pin, and the next one, possibly using diodes or or gates
 		butt_f2_up = 1;
 	}
-	if(!butt_f2_down && TM_GPIO_GetInputPinValue(GPIOC, GPIO_Pin_12)) {													//connected to the outside F2 up and the inside F2
+	if(!butt_f2_down && TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_7)) {													//connected to the outside F2 up and the inside F2
 		butt_f2_down = 1;
 	}
-	if(!butt_f3 && TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_1)) {																//connectedo inside and outside button
+	if(!butt_f3 && TM_GPIO_GetInputPinValue(GPIOB, GPIO_Pin_5)) {																//connectedo inside and outside button
 		butt_f3 = 1;
-	}
-	if(!butt_car_stop && TM_GPIO_GetInputPinValue(GPIOA, GPIO_Pin_10)) {
-		butt_car_stop = 1;
-	}
-	if(!butt_car_reset && TM_GPIO_GetInputPinValue(GPIOA, GPIO_Pin_13)) {
-		butt_car_reset = 1;
 	}
 	
 	if(door_closed != TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_2)) {
@@ -227,7 +225,7 @@ bool move_up(void) {
 		usart_message("UP, moving\n");
 	}
 	
-	TM_GPIO_SetPinHigh(GPIOB, GPIO_Pin_4);																					//TODO fix pins to active low
+	TM_GPIO_SetPinHigh(GPIOA, GPIO_Pin_10);																					//TODO fix pins to active low
 	
 	return 0;
 }
@@ -238,7 +236,7 @@ bool move_down(void) {
 		usart_message("DOWN, moving\n");
 	}
 	
-	TM_GPIO_SetPinHigh(GPIOB, GPIO_Pin_5);																					//TODO fix pins to active low
+	TM_GPIO_SetPinHigh(GPIOA, GPIO_Pin_14);																					//TODO fix pins to active low
 	
 	return 0;
 } 
@@ -250,8 +248,8 @@ bool move_stop(void) {
 		usart_message("STOP, stopping\n");
 	}
 	
-	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_4);																					//TODO fix pins to active low
-	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_5);
+	TM_GPIO_SetPinLow(GPIOA, GPIO_Pin_10);																					//TODO fix pins to active low
+	TM_GPIO_SetPinLow(GPIOA, GPIO_Pin_14);
 	
 	return 0;
 }
@@ -266,17 +264,17 @@ bool usart_message(char* str) {
 bool bcd_display(void){
 	switch(loc_cur) {
 		case 1 : {
-			TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_4);																					//TODO fix pins to active low, if this is also active low
+			TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_5);																				
 			TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_3);
 			break;
 		}
 		case 2 : {
-			TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_4);
+			TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_5);
 			TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_3);	
 			break;	
 		}	
 		case 3 : {
-			TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_4);
+			TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_5);
 			TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_3);
 			break;
 		}		
@@ -292,20 +290,20 @@ bool door_open(void){
 	
 	door_closed = 0;
 		
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_7);																					//TODO fix pins to active low
-	TM_GPIO_SetPinHigh(GPIOB, GPIO_Pin_3);
+	TM_GPIO_SetPinLow(GPIOC, GPIO_Pin_11);																				
+	TM_GPIO_SetPinHigh(GPIOA, GPIO_Pin_15);
 	for( int i = 0; i<door_delay ; i++){																					//wait for a certain amount of time, constantly updating the inputs
 		update_inputs();
 	}
 		
-	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_3);
-	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_5);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_0);
+	TM_GPIO_SetPinHigh(GPIOC, GPIO_Pin_11);
 	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}	
 		
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_5);
-	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_6);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_2);
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_0);
 	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}	
@@ -320,16 +318,16 @@ bool door_open_critical(void) {																								//doors open without upda
 	
 	door_closed = 0;
 		
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_7);																					//TODO fix pins to active low
-	TM_GPIO_SetPinHigh(GPIOB, GPIO_Pin_3);
+	TM_GPIO_SetPinLow(GPIOC, GPIO_Pin_11);																				
+	TM_GPIO_SetPinHigh(GPIOA, GPIO_Pin_15);
 	for( int i = 0; i<door_delay ; i++);
 		
-	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_3);
-	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_5);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_0);
+	TM_GPIO_SetPinHigh(GPIOC, GPIO_Pin_11);
 	for( int i = 0; i<door_delay ; i++);
 		
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_5);
-	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_6);
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_2);
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_0);
 	for( int i = 0; i<door_delay ; i++);
 
 	return 0;
@@ -341,20 +339,20 @@ bool door_close(void){
 		usart_message("CLOSE, doors\n");
 	}
 	
-	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_5);																					//TODO fix pins to active low
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_6);
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_4);																					
+	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_0);
 	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}
 		
-	TM_GPIO_SetPinHigh(GPIOB, GPIO_Pin_3);
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_5);
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_0);
+	TM_GPIO_SetPinLow(GPIOC, GPIO_Pin_11);
 	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}	
 		
-	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_7);
-	TM_GPIO_SetPinLow(GPIOB, GPIO_Pin_3);
+	TM_GPIO_SetPinHigh(GPIOC, GPIO_Pin_11);
+	TM_GPIO_SetPinLow(GPIOA, GPIO_Pin_15);
 	for( int i = 0; i<door_delay ; i++){
 		update_inputs();
 	}	
@@ -373,8 +371,8 @@ bool door_cycle(void) {																													//open doors, wait, then clo
 }
 
 bool check_password(void){																			//TODO make this work
-usart_message("Input Password\n");
-TM_USART_Gets(USART1, pass_array, sizeof(pass_array));
+	usart_message("Input Password\n");
+	TM_USART_Gets(USART1, pass_array, sizeof(pass_array));
 	
 	for(int i = 0; i < 12; i++){
 		
@@ -386,4 +384,7 @@ TM_USART_Gets(USART1, pass_array, sizeof(pass_array));
 		usart_message("Password Incorrect, Please enter again\n");		
 		}
 	}
+	
+	return 0;
 }
+

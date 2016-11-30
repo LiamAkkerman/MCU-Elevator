@@ -41,3 +41,4 @@
 .\targets\stm32f4_discovery\main.o: ..\00-STM32F429_LIBRARIES\attributes.h
 .\targets\stm32f4_discovery\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\targets\stm32f4_discovery\main.o: ..\00-STM32F429_LIBRARIES\tm_stm32f4_gpio.h
+.\targets\stm32f4_discovery\main.o: ..\00-STM32F429_LIBRARIES\tm_stm32f4_usart.h
