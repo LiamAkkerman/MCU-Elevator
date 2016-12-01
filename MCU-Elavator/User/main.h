@@ -3,6 +3,7 @@
 static char init(void);
 static char update_inputs(void);
 static char update_critical(void);
+static char update_location(void);
 static char activate_uart(void);
 static char usart_message(char* str);
 static char bcd_display(void);

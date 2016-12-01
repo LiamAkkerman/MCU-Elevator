@@ -58,29 +58,37 @@ int main(void) {
 					}
 				}
 			} 
-			/*
+			
 			else if(butt_car_reset) {																														//if the car needs to be reset
 				butt_f1 = 0;																																			//reset all button presses
 				butt_f2_down = 0;
 				butt_f2_up = 0;
 				butt_f3 = 0;
 				butt_car_stop = 0;
-				butt_car_reset = 0;																					
+				butt_car_reset = 0;	
+				button_display();
 				if(usart_on) {
 					usart_message("RESET\n");
 				}
 				
+				move_stop();
 				if(!loc_floor_1) {																																//check to see if it needs to move
 					move_down();																																		//if it isn't on the bottom floor already go downn
 					
-					while(!loc_floor_1);																														//move until the bottom floor is reached						                 																															                                                                             
-					
+					while(!loc_floor_1) {																														//move until the bottom floor is reached						                 																															                                                                             
+						update_location();
+					}
 					move_stop();
 				}
 				door_open_critical();
-				for( int i = 0; i< 12*door_delay; i++);																							// keep the door open for a longer while
+				
+				while(!(butt_f1||butt_f2_down||butt_f2_up||butt_f3)) {
+					update_inputs();
+				}
+				
+				door_close();
 			}
-			*/
+			
 			
 			
 			//else switch(loc_cur) {   																										//react according to which floor the carrige is at
@@ -247,8 +255,7 @@ char update_critical(void) {																																			//inputs that alw
 	return 0;
 }
 
-char update_inputs(void) {																																				//poll all the pins for thier values
-	update_critical();
+char update_location(void) {
 	if(loc_floor_1 == TM_GPIO_GetInputPinValue(GPIOC, GPIO_Pin_10)) {																//trigger switch checking for state changes of the location switches
 		loc_floor_1 = !loc_floor_1;																																		//toggle the variable
 		loc_cur = 1;																																									//they also set the current floor, or once it leaves it'll be the latest floor
@@ -264,6 +271,13 @@ char update_inputs(void) {																																				//poll all the pin
 		loc_cur = 3;
 		bcd_display();
 	}
+	
+	return 0;
+}
+
+char update_inputs(void) {																																				//poll all the pins for thier values
+	update_critical();
+	update_location();
 	
 	
 	if(!butt_f1 && TM_GPIO_GetInputPinValue(GPIOB, GPIO_Pin_3)) {																//only update variable if the pin is high and the varibale isn't already set
@@ -285,6 +299,8 @@ char update_inputs(void) {																																				//poll all the pin
 		door_closed = !door_closed;
 	}
 	*/
+	
+	button_display();
 	
 	//TODO poll for USART password
 
@@ -400,28 +416,40 @@ char door_open(void){
 	return 0;
 }
 
-/*char door_open_critical(void) {																								//doors open without updating buttons
+char door_open_critical(void) {																								//doors open without updating buttons
 	if(usart_on) {
 		usart_message("OPEN, doors, without update\n");
 	}
 
 	door_closed = 0;
-		
-	TM_GPIO_SetPinLow(GPIOC, GPIO_Pin_11);																				
+	
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_2);
+  TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_0);	
+	TM_GPIO_SetPinHigh(GPIOC, GPIO_Pin_11);	
+	TM_GPIO_SetPinLow(GPIOA, GPIO_Pin_15);
+	for( int i = 0; i<12*door_delay ; i++);
+	
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_2);
+  TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_0);	
+	TM_GPIO_SetPinLow(GPIOC, GPIO_Pin_11);	
 	TM_GPIO_SetPinHigh(GPIOA, GPIO_Pin_15);
-	for( int i = 0; i<door_delay ; i++);
+	for( int i = 0; i<12*door_delay ; i++);
 		
-	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_0);
-	TM_GPIO_SetPinHigh(GPIOC, GPIO_Pin_11);
-	for( int i = 0; i<door_delay ; i++);
-		
+	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_2);
+  TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_0);	
+	TM_GPIO_SetPinHigh(GPIOC, GPIO_Pin_11);	
+	TM_GPIO_SetPinHigh(GPIOA, GPIO_Pin_15);
+	for( int i = 0; i<12*door_delay ; i++);
+
 	TM_GPIO_SetPinLow(GPIOD, GPIO_Pin_2);
-	TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_0);
-	for( int i = 0; i<door_delay ; i++);
+  TM_GPIO_SetPinHigh(GPIOD, GPIO_Pin_0);	
+	TM_GPIO_SetPinHigh(GPIOC, GPIO_Pin_11);	
+	TM_GPIO_SetPinHigh(GPIOA, GPIO_Pin_15);
+	for( int i = 0; i<12*door_delay ; i++);
 
 	return 0;
 }
-*/
+
 
 char door_close(void){
 	if(usart_on) {
