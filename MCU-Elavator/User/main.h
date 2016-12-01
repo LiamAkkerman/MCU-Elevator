@@ -21,6 +21,9 @@ static bool move_reset(void);
 
 
 const int door_delay = 15000000;
+const int motor_delay_1;													//TODO delete 1 and 3 if not needed
+const int motor_delay_2 = 10000;									//TODO figure out value from physical model
+const int motor_delay_3;
 
 //TODO intialize all values
 static char loc_cur = 0;

@@ -82,6 +82,9 @@ int main(void) {
 				case 2 : {																																								//if it's at the 2nd floor
 					if(butt_f2_down&&loc_floor_2&&moving_down) {															//if the carrige is on it's way down and someone at the second floor is going down, pick 'em up
 						if(moving) {
+							for(int i = 0; i < motor_delay_2; i++) {															//to adjust to the correct position       TODO find the real value
+								update_inputs();
+							}
 							move_stop();							
 						}
 						butt_f2_down = 0;
@@ -92,6 +95,9 @@ int main(void) {
 					}
 					else if((butt_f2_up)&&loc_floor_2&&moving_up) {														//if the carrige is on it's way up and someone at the second floor is going up, pick 'em up
 						if(moving) {
+							for(int i = 0; i < motor_delay_2; i++) {															//to adjust to the correct position       TODO find the real value
+								update_inputs();
+							}
 							move_stop();						
 						}
 						butt_f2_up = 0;
