@@ -18,25 +18,47 @@ int main(void) {
 		update_inputs();		
 		button_display();
 		bcd_display();
-			
-		//if(butt_f1||butt_f2_down||butt_f2_up||butt_f3||butt_car_stop||butt_car_reset) { 			//if any button is activated
-			//moving = (moving_up|moving_down);
-			/*
+		
+		/*
+		if(butt_f1||butt_f2_down||butt_f2_up||butt_f3||butt_car_stop||butt_car_reset) { 			//if any button is activated
+			moving = (moving_up|moving_down);
 			if(!door_closed) { 																																	//close doors if they're open. probably only open from reset function.
 				door_close();
 			}
+		*/
 			if(butt_car_stop) {																																	//emergency stop activated. stops motion, but doors don't
-				butt_car_stop = 0;
+				
 				if(usart_on) {
 					usart_message("EMERGENCY STOP ACTIVATED!\n");
 				}
-				if(moving) {						
-					move_stop();							
+				char direction;																																		//1 for up, 0 for down
+				if(moving_up) {
+					direction = 1;
 				}
+				if(moving_down) {
+					direction = 0;
+				}
+				//if(moving) {						
+					move_stop();							
+				//}
+				butt_car_stop = 0;																																//TODO debounce button
 				while(!butt_car_stop) {																														//wait for the stop button to be pressed again
 					update_critical();																															//only update the stop and reset button
-				}				
+				}	
+				butt_car_stop = 0;
+
+				switch(direction) {
+					case 1 : {
+						move_up();
+						break;
+					}
+					case 2 : {
+						move_down();
+						break;
+					}
+				}
 			} 
+			/*
 			else if(butt_car_reset) {																														//if the car needs to be reset
 				butt_f1 = 0;																																			//reset all button presses
 				butt_f2_down = 0;
@@ -214,19 +236,19 @@ char init(void) { 																																								//itianize all the pin
 	return 0;
 }
 
-//char update_critical(void) {																																			//inputs that always need to be updated
-//	if(!butt_car_stop && TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_4)) {
-//		butt_car_stop = 1;
-//	}
-//	if(!butt_car_reset && TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_6)) {
-//		butt_car_reset = 1;
-//	}	
-//	
-//	return 0;
-//}
+char update_critical(void) {																																			//inputs that always need to be updated
+	if(!butt_car_stop && TM_GPIO_GetInputPinValue(GPIOA, GPIO_Pin_13)) {
+		butt_car_stop = 1;
+	}
+	if(!butt_car_reset && TM_GPIO_GetInputPinValue(GPIOD, GPIO_Pin_6)) {
+		butt_car_reset = 1;
+	}	
+	
+	return 0;
+}
 
 char update_inputs(void) {																																				//poll all the pins for thier values
-	//update_critical();
+	update_critical();
 	if(loc_floor_1 == TM_GPIO_GetInputPinValue(GPIOC, GPIO_Pin_10)) {																//trigger switch checking for state changes of the location switches
 		loc_floor_1 = !loc_floor_1;																																		//toggle the variable
 		loc_cur = 1;																																									//they also set the current floor, or once it leaves it'll be the latest floor
