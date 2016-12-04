@@ -3,9 +3,9 @@
 <title>Static Call Graph - [.\Targets\STM32F4_Discovery\project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Targets\STM32F4_Discovery\project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060422: Last Updated: Tue Nov 29 21:28:08 2016
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060422: Last Updated: Sun Dec 04 03:33:46 2016
 <BR><P>
-<H3>Maximum Stack Usage =        248 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        264 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 main &rArr; init &rArr; TM_USART_Init &rArr; TM_USART_INT_Init &rArr; TM_UART5_InitPins &rArr; TM_GPIO_InitAlternate &rArr; TM_GPIO_INT_Init
 <P>
@@ -683,7 +683,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TM_GPIO_INT_EnableClock
 <LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TM_GPIO_INT_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init
+<BR>[Called By]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init
 </UL>
 
 <P><STRONG><a name="[6c]"></a>TM_GPIO_InitAlternate</STRONG> (Thumb, 92 bytes, Stack size 44 bytes, tm_stm32f4_gpio.o(.text))
@@ -815,7 +815,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TM_USART_INT_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init
+<BR>[Called By]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init
 </UL>
 
 <P><STRONG><a name="[7d]"></a>TM_USART_InitWithFlowControl</STRONG> (Thumb, 212 bytes, Stack size 48 bytes, tm_stm32f4_usart.o(.text), UNUSED)
@@ -839,8 +839,6 @@ Global Symbols
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TM_USART_Getc
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TM_USART_INT_GetUsart
 </UL>
-<BR>[Called By]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_password
-</UL>
 
 <P><STRONG><a name="[81]"></a>TM_USART_BufferEmpty</STRONG> (Thumb, 26 bytes, Stack size 4 bytes, tm_stm32f4_usart.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TM_USART_INT_GetUsart
@@ -853,8 +851,6 @@ Global Symbols
 <P><STRONG><a name="[83]"></a>TM_USART_ClearBuffer</STRONG> (Thumb, 16 bytes, Stack size 4 bytes, tm_stm32f4_usart.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TM_USART_INT_GetUsart
 </UL>
-<BR>[Called By]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_password
-</UL>
 
 <P><STRONG><a name="[84]"></a>TM_USART_SetCustomStringEndCharacter</STRONG> (Thumb, 12 bytes, Stack size 4 bytes, tm_stm32f4_usart.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TM_USART_INT_GetUsart
@@ -865,7 +861,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TM_USART_INT_GetUsart
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_message
+<BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_message
 </UL>
 
 <P><STRONG><a name="[86]"></a>TM_USART_Send</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, tm_stm32f4_usart.o(.text), UNUSED)
@@ -911,34 +907,30 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f40_41xxx.o(RESET)
 </UL>
-<P><STRONG><a name="[5c]"></a>main</STRONG> (Thumb, 380 bytes, Stack size 0 bytes, main.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 248<LI>Call Chain = main &rArr; init &rArr; TM_USART_Init &rArr; TM_USART_INT_Init &rArr; TM_UART5_InitPins &rArr; TM_GPIO_InitAlternate &rArr; TM_GPIO_INT_Init
+<P><STRONG><a name="[5c]"></a>main</STRONG> (Thumb, 482 bytes, Stack size 0 bytes, main.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 264<LI>Call Chain = main &rArr; init &rArr; TM_USART_Init &rArr; TM_USART_INT_Init &rArr; TM_UART5_InitPins &rArr; TM_GPIO_InitAlternate &rArr; TM_GPIO_INT_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init
-<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_open_critical
-<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;move_up
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_cycle
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;move_down
-<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_message
-<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;move_stop
-<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_close
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;update_inputs
-<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;update_critical
+<BR>[Calls]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_open_critical
+<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_cycle
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_message
+<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;move_up
+<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_close
+<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;update_inputs
+<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;update_critical
+<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;update_location
+<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bcd_display
+<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;move_stop
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;move_down
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> entry9a.o(.ARM.Collect$$$$0000000B)
 </UL>
-<P><STRONG><a name="[93]"></a>check_password</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, main.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_message
-<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TM_USART_ClearBuffer
-<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TM_USART_Gets
-</UL>
-
 <P><STRONG><a name="[5d]"></a>SystemInit</STRONG> (Thumb, 74 bytes, Stack size 8 bytes, system_stm32f4xx.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = SystemInit &rArr; SetSysClock
 </UL>
 <BR>[Calls]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetSysClock
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init
+<BR>[Called By]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f40_41xxx.o(.text)
 </UL>
@@ -980,96 +972,87 @@ Local Symbols
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TM_USART_Init
 </UL>
 
-<P><STRONG><a name="[8a]"></a>bcd_display</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, main.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = bcd_display
-</UL>
-<BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;update_inputs
-</UL>
-
-<P><STRONG><a name="[89]"></a>update_critical</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, main.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;update_inputs
-</UL>
-
-<P><STRONG><a name="[88]"></a>update_inputs</STRONG> (Thumb, 186 bytes, Stack size 24 bytes, main.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = update_inputs &rArr; bcd_display
-</UL>
-<BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;update_critical
-<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bcd_display
-</UL>
-<BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_open
-<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_close
-</UL>
-
-<P><STRONG><a name="[8b]"></a>door_close</STRONG> (Thumb, 106 bytes, Stack size 32 bytes, main.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = door_close &rArr; update_inputs &rArr; bcd_display
-</UL>
-<BR>[Calls]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_message
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;update_inputs
-</UL>
-<BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_cycle
-</UL>
-
-<P><STRONG><a name="[8d]"></a>move_stop</STRONG> (Thumb, 36 bytes, Stack size 8 bytes, main.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = move_stop &rArr; usart_message &rArr; TM_USART_Puts
-</UL>
-<BR>[Calls]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_message
-</UL>
-<BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
-<P><STRONG><a name="[8c]"></a>usart_message</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, main.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = usart_message &rArr; TM_USART_Puts
-</UL>
-<BR>[Calls]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TM_USART_Puts
-</UL>
-<BR>[Called By]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_password
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_open
-<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_open_critical
-<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;move_up
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;move_down
-<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;move_stop
-<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_close
-</UL>
-
-<P><STRONG><a name="[8f]"></a>move_down</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, main.o(.text))
+<P><STRONG><a name="[88]"></a>move_down</STRONG> (Thumb, 38 bytes, Stack size 8 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = move_down &rArr; usart_message &rArr; TM_USART_Puts
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_message
+<BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_message
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[91]"></a>door_cycle</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, main.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = door_cycle &rArr; door_close &rArr; update_inputs &rArr; bcd_display
+<P><STRONG><a name="[8a]"></a>move_stop</STRONG> (Thumb, 34 bytes, Stack size 8 bytes, main.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = move_stop &rArr; usart_message &rArr; TM_USART_Puts
 </UL>
-<BR>[Calls]<UL><LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_open
-<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_close
+<BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_message
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_open
+<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_close
 </UL>
 
-<P><STRONG><a name="[92]"></a>move_up</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, main.o(.text))
+<P><STRONG><a name="[8c]"></a>bcd_display</STRONG> (Thumb, 90 bytes, Stack size 20 bytes, main.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = bcd_display
+</UL>
+<BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;update_location
+</UL>
+
+<P><STRONG><a name="[8b]"></a>update_location</STRONG> (Thumb, 102 bytes, Stack size 16 bytes, main.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = update_location &rArr; bcd_display
+</UL>
+<BR>[Calls]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bcd_display
+</UL>
+<BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;update_inputs
+</UL>
+
+<P><STRONG><a name="[8e]"></a>update_critical</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, main.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;update_inputs
+</UL>
+
+<P><STRONG><a name="[8d]"></a>update_inputs</STRONG> (Thumb, 70 bytes, Stack size 8 bytes, main.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = update_inputs &rArr; update_location &rArr; bcd_display
+</UL>
+<BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;update_critical
+<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;update_location
+</UL>
+<BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_open
+<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_close
+</UL>
+
+<P><STRONG><a name="[8f]"></a>door_close</STRONG> (Thumb, 212 bytes, Stack size 40 bytes, main.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 84<LI>Call Chain = door_close &rArr; update_inputs &rArr; update_location &rArr; bcd_display
+</UL>
+<BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_message
+<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;update_inputs
+<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;move_stop
+</UL>
+<BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_cycle
+</UL>
+
+<P><STRONG><a name="[90]"></a>door_open</STRONG> (Thumb, 198 bytes, Stack size 40 bytes, main.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 84<LI>Call Chain = door_open &rArr; update_inputs &rArr; update_location &rArr; bcd_display
+</UL>
+<BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_message
+<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;update_inputs
+<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;move_stop
+</UL>
+<BR>[Called By]<UL><LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_cycle
+</UL>
+
+<P><STRONG><a name="[91]"></a>move_up</STRONG> (Thumb, 36 bytes, Stack size 8 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = move_up &rArr; usart_message &rArr; TM_USART_Puts
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_message
+<BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_message
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[90]"></a>door_open_critical</STRONG> (Thumb, 398 bytes, Stack size 8 bytes, main.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = door_open_critical &rArr; usart_message &rArr; TM_USART_Puts
-</UL>
-<BR>[Calls]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_message
-</UL>
-<BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
-<P><STRONG><a name="[8e]"></a>init</STRONG> (Thumb, 112 bytes, Stack size 24 bytes, main.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 248<LI>Call Chain = init &rArr; TM_USART_Init &rArr; TM_USART_INT_Init &rArr; TM_UART5_InitPins &rArr; TM_GPIO_InitAlternate &rArr; TM_GPIO_INT_Init
+<P><STRONG><a name="[92]"></a>init</STRONG> (Thumb, 328 bytes, Stack size 40 bytes, main.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 264<LI>Call Chain = init &rArr; TM_USART_Init &rArr; TM_USART_INT_Init &rArr; TM_UART5_InitPins &rArr; TM_GPIO_InitAlternate &rArr; TM_GPIO_INT_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TM_USART_Init
 <LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TM_GPIO_Init
@@ -1078,13 +1061,35 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[94]"></a>door_open</STRONG> (Thumb, 106 bytes, Stack size 24 bytes, main.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = door_open &rArr; update_inputs &rArr; bcd_display
+<P><STRONG><a name="[89]"></a>usart_message</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, main.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = usart_message &rArr; TM_USART_Puts
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_message
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;update_inputs
+<BR>[Calls]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TM_USART_Puts
 </UL>
-<BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_cycle
+<BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_open_critical
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;move_up
+<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_open
+<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_close
+<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;move_stop
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;move_down
+</UL>
+
+<P><STRONG><a name="[94]"></a>door_cycle</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, main.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 92<LI>Call Chain = door_cycle &rArr; door_open &rArr; update_inputs &rArr; update_location &rArr; bcd_display
+</UL>
+<BR>[Calls]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_open
+<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;door_close
+</UL>
+<BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[93]"></a>door_open_critical</STRONG> (Thumb, 128 bytes, Stack size 24 bytes, main.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = door_open_critical &rArr; usart_message &rArr; TM_USART_Puts
+</UL>
+<BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_message
+</UL>
+<BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[95]"></a>SetSysClock</STRONG> (Thumb, 162 bytes, Stack size 12 bytes, system_stm32f4xx.o(.text))
