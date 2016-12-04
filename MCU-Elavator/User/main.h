@@ -44,7 +44,3 @@ static char door_closed = 1;
 static char moving_up = 0;
 static char moving_down = 0;
 
-
-
-
-
