@@ -1,46 +1,42 @@
-#include <stdbool.h>
-
-typedef bool uint1_t;
-
-static bool init(void);
-static bool update_inputs(void);
-static bool update_critical(void);
-static bool activate_uart(void);
-static bool usart_message(char* str);
-static bool bcd_display(void);
+static char init(void);
+static char update_inputs(void);
+static char update_critical(void);
+static char update_location(void);
+static char activate_uart(void);
+static char usart_message(char* str);
+static char bcd_display(void);
+static char button_display(void);
 
 
-static bool door_open(void); 
-static bool door_open_critical(void); 
-static bool door_close(void);
-static bool door_cycle(void);
-static bool move_up(void);
-static bool move_down(void);
-static bool move_stop(void);
-static bool move_reset(void);
+static char door_open(void); 
+static char door_open_critical(void); 
+static char door_close(void);
+static char door_cycle(void);
+static char move_up(void);
+static char move_down(void);
+static char move_stop(void);
+static char move_reset(void);
 
 
-const int door_delay = 15000000;
+const int door_delay = 700000;
 
-//TODO intialize all values
 static char loc_cur = 0;
-static bool loc_floor_1 = 0;
-static bool loc_floor_2 = 0;
-static bool loc_floor_3 = 0;
+static char loc_floor_1 = 0;
+static char loc_floor_2 = 0;
+static char loc_floor_3 = 0;
 
-static bool door_closed;
-static bool moving_up;
-static bool moving_down;
+static char door_closed = 1;
+static char moving_up = 0;
+static char moving_down = 0;
 
-static bool butt_f1;
-static bool butt_f2_down;
-static bool butt_f2_up;
-static bool butt_f3;
-static bool butt_car_stop;
-static bool butt_car_reset;
+static char butt_f1 = 0;
+static char butt_f2_down = 0;
+static char butt_f2_up = 0;
+static char butt_f3 = 0;
+static char butt_car_stop = 0;
+static char butt_car_reset = 0;
 
-static bool usart_on = 0;
-const static char* password_correct = "MSE Rocks!";
-static char pass_array[12];
+static char usart_on = 0;
+
 
 
